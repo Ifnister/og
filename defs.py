@@ -35,18 +35,42 @@ def all_defense():
 
 
 class Coordinates:
+    """
+    Class for storing coordinates as a list of integers
+    """
 
     def __init__(self, string):
+        """    
+        The constructor accepts a string like [x:y:z] or "x:y:z"
+
+        Raises a ValueError if the coordinates are not in the correct range
+
+        Raises a TypeError if the string passed to the constructor is not a valid string
+        """
+
         search = re.findall('\d+', string)
         if search:
             self.coordinates = [int(elem) for elem in search]
+            if not 1 <= self.coordinates[0] <= 9 or not 1 <= self.coordinates[1] <= 499 or not 1 <= self.coordinates[2] <= 15:
+                raise ValueError("""Incorrect value for the coordinates. Either
+                                --- Galaxy is wrong: {0}
+                                --- Solar system is wrong: {1}
+                                --- Position is wrong: {2}""".format(*self.coordinates)
         else:
-           raise TypeError('Incorrect coordinates: "{0}"'.format(string))
+           raise TypeError('Incorrect string for initializing coordinates: "{0}"'.format(string))
 
     def __str__(self):
         return '[{0}:{1}:{2}]'.format(self.coordinates[0], self.coordinates[1], self.coordinates[2])
 
+
     def distance(self, coords):
+        """
+        Compute the distance to another coordinates, given
+        by another Coordinates object
+
+        Ref: http://ogame.wikia.com/wiki/Distance
+        """
+
         if self.coordinates[0] != coords.get_galaxy():
             return 20000 * abs(self.coordinates[0] - coords.get_galaxy())
         elif self.coordinates[1] != coords.get_solar_system():
@@ -55,22 +79,42 @@ class Coordinates:
             return 1000 + 5 * abs(self.coordinates[2] - coords.get_position())
 
     def get_galaxy(self, string = False):
+        """
+        Returns an integer if string == False
+        otherwise returns a string
+        """
+
         if string:
             return str(self.coordinates[0])
         return self.coordinates[0]
 
     def get_solar_system(self, string = False):
+        """
+        Returns an integer if string == False
+        otherwise returns a string
+        """
+
         if string:
             return str(self.coordinates[1])
         return self.coordinates[1]
     
     def get_position(self, string = False):
+        """
+        Returns an integer if string == False
+        otherwise returns a string
+        """
+
         if string:
             return str(self.coordinates[2])
         return self.coordinates[2]
 
     
     def get_probe_time(self, coordinates2, combustion):
+        """
+        Return the time as a float number that it takes to send a probe from the Coordinates object to
+        another Coordinates object given the level of the combustion drive
+        """
+        
         speed = (1 + 0.1 * combustion) * 1e8
         return 10 + 3500 * math.sqrt(10 * self.distance(coordinates2) / speed)
 
@@ -94,6 +138,16 @@ Armour Technology	4 	Energy Technology	3
 Combustion Drive	3 	Impulse Drive	3
 Laser Technology	3
 Chance of counter-espionage:0%"""
+
+
+
+
+class Base:
+    """
+    Base class for the Resources, Fleet, Defense and Research classes
+    """
+
+    def __init__(self, report):
 
 class Resources:
     def __init__(self, report = None, res_list = None):
@@ -158,6 +212,7 @@ class Buildings:
 
     def __str__(self):
         return '\n'.join([building + ': ' + str(self.level[building]) for building
+
             in all_buildings() if self.level[building] != 0])
 
 

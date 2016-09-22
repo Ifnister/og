@@ -5,7 +5,7 @@ import get_max
 m = Mouse.create()
 k = Keyboard.create()
 
-wait_time = 122
+wait_time = 125
 objective = "1:324:8"
 #max_position = (955, 412)
 #max_position = (955, 392)
