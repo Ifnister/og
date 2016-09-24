@@ -6,7 +6,7 @@ m = Mouse.create()
 k = Keyboard.create()
 
 wait_time = 125
-objective = "1:324:8"
+objective = "1:193:12"
 #max_position = (955, 412)
 #max_position = (955, 392)
 #max_position = (955, 372)
@@ -26,7 +26,7 @@ while counter < 1e9:
     counter += 1
     m.move(*fleet)
     m.click()
-    time.sleep(low_wait)
+    time.sleep(low_wait + 0.5)
     max_position = get_max.get_probe_max(m, k)
     first_ok = (892, max_position[1] + 60)
     m.move(*max_position)

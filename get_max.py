@@ -32,8 +32,8 @@ def get_probe_max(mouse, keyboard):
 def get_text(mouse, keyboard):
     r = tk.Tk()
     r.withdraw()
-    keyboard.press_and_release('Ctrl+a')
-    keyboard.press_and_release('Ctrl+c')
+    keyboard.press_and_release('Ctrl+a', delay = 0)
+    keyboard.press_and_release('Ctrl+c', delay = 0)
     return r.clipboard_get()
 
 #m.move(*get_probe_max(m, k))
