@@ -5,8 +5,8 @@ import get_max
 m = Mouse.create()
 k = Keyboard.create()
 
-wait_time = 125
-objective = "1:193:12"
+wait_time = 124
+objective = "1:195:10"
 #max_position = (955, 412)
 #max_position = (955, 392)
 #max_position = (955, 372)
@@ -23,6 +23,9 @@ first_field_fleet = (941, 252)
 low_wait = 0.8
 counter = 0
 while counter < 1e9:
+    if counter == 20:
+        objective = "1:195:5"
+        wait_time = 124
     counter += 1
     m.move(*fleet)
     m.click()

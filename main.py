@@ -27,9 +27,6 @@ first_field_fleet = (941, 252)
 low_wait = 0.8
 counter = 0
 
-
-
-
 class Job:
     def __init__(self, reports_string, mouse, keyboard):
         self.reports = []
