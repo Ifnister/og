@@ -170,12 +170,6 @@ def _report_str(dic, ls):
     return '\n'.join(auxls)
 
         
-        
-        
-
-    
-    
-
 class Resources:
     def __init__(self, report = None):
         if report:
@@ -202,25 +196,25 @@ class Resources:
 
     def __str__(self):
         return _report_str(self.res, _RESOURCES)
-        return 'Metal:\t\t{0}\t\tCrystal:\t{1}\nDeuterium:\t{2}\t\tEnergy:\t\t{3}'\
-                .format(self.res['Metal'], self.res['Crystal'], self.res['Deuterium'], self.res['Energy'])
+#        return 'Metal:\t\t{0}\t\tCrystal:\t{1}\nDeuterium:\t{2}\t\tEnergy:\t\t{3}'\
+#                .format(self.res['Metal'], self.res['Crystal'], self.res['Deuterium'], self.res['Energy'])
         
 
 class Fleet:
     def __init__(self, report = None):
         if report:
             if re.search('Fleets', report):
-                self.in_report = True
+                self.fleet_in_report = True
                 self.fleet = _constructor(report, _SHIPS)
             else:
-                self.in_report = False
+                self.fleet_in_report = False
 
     def __str__(self):
         return _report_str(self.fleet, _SHIPS)
     
     def is_in_report(self):
         try:
-            return self.in_report
+            return self.fleet_in_report
         except NameError:
             raise NameError('Checking if \'Fleets\' appears in the report with no report submitted') 
 
@@ -229,14 +223,14 @@ class Defense:
     def __init__(self, report = None):
         if report:
             if re.search('Defense', report):
-                self.in_report = True
+                self.defense_in_report = True
                 self.defense = _constructor(report, _DEFENSE)
             else:
-                self.in_report = False
+                self.defense_in_report = False
 
     def is_in_report(self):
         try:
-            return self.in_report
+            return self.defense_in_report
         except NameError:
             raise NameError('Checking if \'Defense\' appears in the report with no report submitted') 
 
@@ -252,11 +246,11 @@ class Buildings:
     def __init__(self, report = None):
         if report:
             if re.search('Buildings', report):
-                self.in_report = True
+                self.buildings_in_report = True
                 self.buildings = _constructor(report, _BUILDINGS)
     def is_in_report(self):
         try:
-            return self.in_report
+            return self.buildings_in_report
         except NameError:
             raise NameError('Checking if \'Buildings\' appears in the report with no report submitted') 
 
@@ -270,14 +264,14 @@ class Research:
     def __init__(self, report = None):
         if report:
             if re.search('Research', report):
-                self.in_report = True
+                self.research_in_report = True
                 self.research = _constructor(report, _RESEARCH)
             else:
-                self.in_report = False
+                self.research_in_report = False
 
     def is_in_report(self):
         try:
-            return self.in_report
+            return self.research_in_report
         except NameError:
             raise NameError('Checking if \'Research\' appears in the report with no report submitted') 
 
@@ -310,10 +304,21 @@ class Report(Resources, Fleet, Defense, Buildings, Research):
             if elem.is_in_report(self):
                 ls.append(elem.__str__(self))
         return '\n\n'.join(ls)
+
+    def is_in_report(self, core_class):
+        if core_class in _CORE_CLASSES + ['Resources']:
+            return core_class.is_in_report(self)
+        else:
+            print("Wrong class name")
+            return False
                 
+
+    def get_guess_resources(self):
+        pass
 
     def get_coordinates(self):
         return self.coords
 
 
-
+a = Report(string)
+print(a.is_in_report(Fleet))

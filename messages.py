@@ -24,6 +24,9 @@ class Message:
             else:
                 self.type = 'something else'
 
+    def __str__(self):
+        return message
+
     def is_fleet_command(self):
         return self.type in _TYPES
 
@@ -54,11 +57,8 @@ class Message:
  
 test = """
 
-	
-	
-			
 Metal 	Crystal 	Deuterium 	Energy
-29.965 	28.161 	16.418 	-10/2.049
+18.752 	7.880 	3.925 	-56/2.361
 
 Universe 1 (v 0.77)
 Overview
@@ -83,26 +83,27 @@ Legal Notice
 ^
 Messages
 Action 	Date 	From 	Subject
-	09-23 20:13:37 	Fleet command 	Reaching a planet
-	Your fleet arrived at the planet [[1:199:5]] and delivered its goods:
-Metal:25.000 Crystal:0 Deuterium:0.
-	09-23 19:49:20 	Fleet command 	Return of a fleet
-	One of your fleets (Espionage Probe: 166 ) returns from [1:197:5] to Planet [1:199:10] . The fleet is delivering 367 Metal, 367 Crystal and 95 Deuterium.
-	09-23 19:48:19 	Fleet Command 	Battle Report (0,166) [1:197:5] (V:0,A:0)
-	09-23 18:18:58 	Onpu [1:154:9] 	Re:no subjectanswer
-	Ola presiosoh
-	09-23 17:28:52 	Fleet command 	Reaching a planet
-	Your fleet arrived at the planet [[1:199:5]] and delivered its goods:
-Metal:35.000 Crystal:0 Deuterium:0.
-	09-23 16:54:02 	Space monitoring 	Resource delivery by foreign fleet
-	A foreign fleet from SyRaToR is delivering resources Planet [[1:199:10]]:
-Metal:0 Crystal:0 Deuterium:30.000
-Previously you had: Metal:55.021 Crystal:55.693 Deuterium:5.034
-Now you have: Metal:55.021 Crystal:55.693 Deuterium:35.034
-	09-23 15:54:46 	SyRaToR [1:199:11] 	Re:no subjectanswer
-	Hi, ill can send you up to 60k Deut...
+	10-03 07:41:09 	Fleet command 	Return of a fleet
+	One of your fleets (Espionage Probe: 172 ) returns from [1:202:10] to Planet [1:199:10] . The fleet is delivering 422 Metal, 422 Crystal and 15 Deuterium.
+	10-03 07:40:07 	Fleet Command 	Battle Report (0,172) [1:202:10] (V:0,A:0)
+	10-03 07:38:56 	Fleet command 	Return of a fleet
+	One of your fleets (Espionage Probe: 172 ) returns from [1:202:10] to Planet [1:199:10] . The fleet is delivering 420 Metal, 420 Crystal and 17 Deuterium.
+	10-03 07:37:55 	Fleet Command 	Battle Report (0,172) [1:202:10] (V:0,A:0)
+	10-03 07:36:51 	Fleet command 	Return of a fleet
+	One of your fleets (Espionage Probe: 172 ) returns from [1:202:10] to Planet [1:199:10] . The fleet is delivering 418 Metal, 418 Crystal and 23 Deuterium.
+	10-03 07:35:48 	Fleet Command 	Battle Report (0,172) [1:202:10] (V:0,A:0)
+	10-03 07:13:22 	Fleet command 	Return of a fleet
+	One of your fleets (Espionage Probe: 172 ) returns from [1:202:10] to Planet [1:199:10] . The fleet is delivering 286 Metal, 286 Crystal and 286 Deuterium.
+	10-03 07:12:20 	Fleet Command 	Battle Report (0,172) [1:202:10] (V:0,A:0)
+	10-03 06:50:42 	Fleet command 	Return of a fleet
+	One of your fleets (Small Cargo: 10 ) returns from [1:366:5] to Planet [1:391:5] . ^
+	10-03 06:31:47 	Fleet command 	Return of a fleet
+	One of your fleets (Small Cargo: 28 Light Fighter: 6 Heavy Fighter: 4 Espionage Probe: 172 ) returns from [1:199:9] to Planet [1:199:10] . The fleet is delivering 471 Metal, 10.706 Crystal and 8.455 Deuterium.
 show only partial espionage reports
 Gameoperators
+
+
+
 
 """
 
@@ -122,10 +123,8 @@ def message_divider(string):
 def message_parser(string):
     ls = []
     for mes in message_divider(string):
-        print(mes)
-        input()
         auxmes = Message(mes)
-        if auxmes.is_fleet_return:
+        if auxmes.is_fleet_return():
             ls.append(auxmes)
     return ls
 
